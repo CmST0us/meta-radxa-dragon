@@ -21,9 +21,13 @@ This layer depends on:
 
 * Dragon Q6A
 
+### QCS9075
+
+* Airbox Q900
+
 ## Build an image for the machine added
 ```bash
-MACHINE="qcs6490-dragon-q6a" DISTRO="qcom-wayland" source setup-environment
+MACHINE="qcs6490-radxa-dragon-q6a" DISTRO="qcom-wayland" source setup-environment
 bitbake qcom-multimedia-image
 ```
 'qcom-wayland' DISTRO and 'qcom-multimedia-image' are defined in meta-qcom-distro layer.
