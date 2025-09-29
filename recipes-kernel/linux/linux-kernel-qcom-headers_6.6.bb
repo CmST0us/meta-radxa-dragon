@@ -13,7 +13,7 @@ COMPATIBLE_MACHINE = "(qcom)"
 
 SRCPROJECT = "git://git@github.com/radxa/kernel.git;protocol=https"
 SRCBRANCH  = "kernel.qclinux.1.0.r1-rel"
-SRCREV     = "6bb0f2950c8e28edca10c9807e2e6e4b974dcfb7"
+SRCREV     = "2e366d0032ca24a914bb0a0b100c3f4aec093817"
 SRC_URI = "${SRCPROJECT};branch=${SRCBRANCH};destsuffix=kernel"
 
 S = "${WORKDIR}/kernel"

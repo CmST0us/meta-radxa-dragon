@@ -13,7 +13,7 @@ COMPATIBLE_MACHINE = "(qcom)"
 
 SRCPROJECT = "git://git@github.com/radxa/kernel.git;protocol=https"
 SRCBRANCH  = "kernel.qclinux.1.0.r1-rel"
-SRCREV     = "a3427e92ccda83df54a05be3ede82a14f0f5f56c"
+SRCREV     = "2e366d0032ca24a914bb0a0b100c3f4aec093817"
 
 SRC_URI = "${SRCPROJECT};branch=${SRCBRANCH};destsuffix=kernel \
            ${@bb.utils.contains('DISTRO_FEATURES', 'selinux', ' file://selinux.cfg', '', d)} \
@@ -22,10 +22,6 @@ SRC_URI = "${SRCPROJECT};branch=${SRCBRANCH};destsuffix=kernel \
            ${@bb.utils.contains('DISTRO_FEATURES', 'smack', ' file://smack_debug.cfg', '', d)} \
            file://0001-QCLINUX-Add-support-to-compile-msm_display.ko.patch \
            file://0002-QCLINUX-arm64-dts-qcom-Disable-eMMC-ICE.patch \
-           file://0003-PENDING-arm64-dts-qcom-Add-EEPROM-support-for-IQ-907.patch \
-           file://0004-QCLINUX-net-stmmac-Add-EEPROM-support-to-driver.patch \
-           file://0005-kernel-arm64-dts-qcom-enable-EEPROM-Client-Driver.patch \
-           file://0006-kernel-config-qcom-enable-AT24-EEPROM-driver.patch \
            "
 
 S = "${WORKDIR}/kernel"

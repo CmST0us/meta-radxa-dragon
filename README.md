@@ -23,7 +23,7 @@ This layer depends on:
 
 ### QCS9075
 
-* Airbox Q900
+* AIRbox Q900
 
 ## Build an image for the machine added
 ```bash
