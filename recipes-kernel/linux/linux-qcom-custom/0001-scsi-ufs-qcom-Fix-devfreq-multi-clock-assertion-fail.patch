@@ -1,0 +1,34 @@
+From 16b13ef3b068543f2a9d189bb1c2349625f58474 Mon Sep 17 00:00:00 2001
+From: Eric Wu <eric3u@outlook.com>
+Date: Sat, 8 Nov 2025 23:10:18 +0800
+Subject: [PATCH] scsi: ufs: qcom: Fix devfreq multi-clock assertion failure
+
+Fix UFS boot failure on QCS6490 Radxa Dragon Q6A caused by OPP framework's
+single-clock assertion when using multi-clock devfreq configuration.
+
+The board DTS was missing the 'freq-table-hz' property, causing the driver
+to fall back to operating-points-v2 path which configures 8 clocks. This
+triggers assert_single_clk() warning in drivers/opp/core.c:107, returning
+-EINVAL and causing ufshcd_async_scan() to fail.
+---
+ drivers/ufs/core/ufshcd.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index f8f11832cf6d..f11e55022403 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -8824,8 +8824,11 @@ static int ufshcd_add_lus(struct ufs_hba *hba)
+ 		hba->clk_scaling.is_allowed = true;
+ 
+ 		ret = ufshcd_devfreq_init(hba);
+-		if (ret)
+-			goto out;
++		if (ret) {
++			dev_warn(hba->dev, "devfreq init failed (%d), continuing without clock scaling\n", ret);
++			hba->clk_scaling.is_allowed = false;
++			ret = 0; /* Don't fail probe if devfreq fails */
++		}
+ 
+ 		hba->clk_scaling.is_enabled = true;
+ 		ufshcd_init_clk_scaling_sysfs(hba);
